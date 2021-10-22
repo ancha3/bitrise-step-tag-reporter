@@ -1,0 +1,84 @@
+#
+# A couple of useful guides & docs:
+#
+# - Main Bitrise CLI docs: https://github.com/bitrise-io/bitrise/tree/master/_docs
+# - Step Development Guideline: https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+# - Bitrise.yml format spec: https://github.com/bitrise-io/bitrise/blob/master/_docs/bitrise-yml-format-spec.md
+# - Bitrise docs: http://devcenter.bitrise.io/
+# - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
+
+title: |-
+  tag-reporter
+summary: |
+  Counts tags added in files in a specific directory and share a report
+description: |
+  This step takes in a tag name, directory and a threshold limit as inputs. 
+  It counts and list files that have the tag name specified. 
+  It generates a text file on the list of files and the number of tag occurences. 
+  If the number exceeds the threshold set, it will throw a failure
+website: https://github.com/ancha3/bitrise-step-tag-reporter
+source_code_url: https://github.com/ancha3/bitrise-step-tag-reporter
+support_url: https://github.com/ancha3/bitrise-step-tag-reporter/issues
+host_os_tags:
+  - osx-10.10
+  - ubuntu-16.04
+type_tags:
+  - utility
+
+is_requires_admin_user: false
+is_always_run: true
+is_skippable: false
+run_if: ""
+
+deps:
+
+toolkit:
+  bash:
+    entry_file: step.sh
+
+
+inputs:
+  - config_file_path:
+    opts:
+      title: "Config file path"
+      summary: "Path of the config file"
+      description: |
+        The config file where we have some information like the current tag count threshold eg. to compare with next builds and alert if needed.
+        If you want use Environment Variables instead of the config file, do not set this key. Instead set on Tag Count Threshold.
+      is_expand: false
+      is_required: false
+  - tag_name:
+    opts:
+      title: "Tag Name"
+      summary: "Tag name to use to identity the number of occurences in the project"
+      description: |
+        Set this key is you want to customize the tag name used by your project.
+        You can add a config file where you can add all application information and set `config_file_path` to find it.
+      is_expand: false
+      is_required: false
+  - tag_dirs:
+    opts:
+      title: "Tag directories"
+      summary: "Directorie(s) where to look for the tag in the project"
+      description: |
+        Set this key is you want to customize the directory used by your project. If multiple directories, use comma-separated values
+        You can add a config file where you can add all application information and set `config_file_path` to find it.
+      is_expand: false
+      is_required: false
+  - tag_count_threshold:
+    opts:
+      title: "Tag Count Threshold"
+      summary: "Threshold set on the number of tags can exist in a project"
+      description: |
+        Set this key if you want to follow up the tag count used by your project
+
+        You can add a config file where you can add all application information and set `config_file_path` to find it.
+
+        Tip: You can set it to 0 and launch one time this step to check report file to know the current value.
+      is_expand: false
+      is_required: false
+
+outputs:
+  - TAG_TOTAL_COUNT:
+    opts:
+      title: Current build's tag count

@@ -1,5 +1,5 @@
 format_version: 4
-default_step_lib_source: https://github.com/ancha3/bitrise-steplib
+default_step_lib_source: https://github.com/ancha3/bitrise-steplib.git
 
 app:
   envs:
@@ -10,6 +10,9 @@ app:
 
 workflows:
   test:
+    before_run:
+    - audit-this-step
+    - build-android
     steps:
     - script:
         inputs:

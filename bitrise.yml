@@ -38,7 +38,7 @@ workflows:
         inputs:
         - tag_name: "@test-tag"
         - tag_dirs: "src"
-        - tag_count_threshold: "2"
+        - tag_count_threshold: "3"
     - script:
         inputs:
         - content: |

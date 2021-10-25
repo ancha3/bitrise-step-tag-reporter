@@ -32,8 +32,15 @@ for dir in ${tag_dirs//,/ }
 do
   CURRENT_TAGGED_FILES_COUNT=$(echo $(grep -roh $tag_name $dir* | wc -l))
   TOTAL_TAGGED_FILES_COUNT=`expr $TOTAL_TAGGED_FILES_COUNT + $CURRENT_TAGGED_FILES_COUNT`
-  grep -rl $tag_name $dir* >> list_tagged_files.txt
+  
+  if [ ! $CURRENT_TAGGED_FILES_COUNT == "0" ]; then
+    grep -rl $tag_name $dir* > list_tagged_files.txt
+  fi
 done
+
+if [ -f "list_tagged_files.txt" ]; then
+    cp list_tagged_files.txt $BITRISE_DEPLOY_DIR/list_tagged_files.txt
+fi
 
 echo "---- REPORT ----"
 

@@ -28,11 +28,11 @@ fi
 
 TOTAL_TAGGED_FILES_COUNT=0
 
-for dir in ${dirs//,/ }
+for dir in ${tag_dirs//,/ }
 do
-  CURRENT_TAGGED_FILES_COUNT=$(echo $(grep -roh $tag_name $tag_dirs* | wc -l))
+  CURRENT_TAGGED_FILES_COUNT=$(echo $(grep -roh $tag_name $dir* | wc -l))
   TOTAL_TAGGED_FILES_COUNT=`expr $TOTAL_TAGGED_FILES_COUNT + $CURRENT_TAGGED_FILES_COUNT`
-  grep -rl $tag_name $tag_dirs* >> list_tagged_files.txt
+  grep -rl $tag_name $dir* >> list_tagged_files.txt
 done
 
 echo "---- REPORT ----"
@@ -48,7 +48,10 @@ printf "Tag count threshold (from config): $tag_count_threshold \n" >> quality_r
 printf "Current tag count: $TOTAL_TAGGED_FILES_COUNT \n" >> quality_report.txt
 printf "You can see list of tagged files into list_tagged_files.txt \n\n" >> quality_report.txt
 
+cp quality_report.txt $BITRISE_DEPLOY_DIR/quality_report.txt || true
+
 if [ $TOTAL_TAGGED_FILES_COUNT -gt $tag_count_threshold ]; then
+    envman add --key TOTAL_TAGGED_FILES_COUNT --value $TOTAL_TAGGED_FILES_COUNT
     echo "ERROR: New files have been tagged"
     exit 1
 fi

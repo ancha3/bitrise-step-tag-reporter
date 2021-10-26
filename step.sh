@@ -48,7 +48,7 @@ if [ ! -f "quality_report.txt" ]; then
     printf "QUALITY REPORT\n\n\n" > quality_report.txt
 fi
 
-printf ">>>>>>>>>>  CURRENT TAGGED FILES  <<<<<<<<<<\n" >> quality_report.txt
+printf ">>>>>>>>>>  CURRENT TAGGED FILES REPORT  <<<<<<<<<<\n" >> quality_report.txt
 printf "Tag name (from config): $tag_name \n" >> quality_report.txt
 printf "Tag directory(s) (from config): $tag_dirs \n" >> quality_report.txt
 printf "Tag count threshold (from config): $tag_count_threshold \n" >> quality_report.txt

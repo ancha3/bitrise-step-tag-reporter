@@ -28,7 +28,7 @@ fi
 
 TOTAL_TAGGED_FILES_COUNT=0
 FORMATTED_TAG_NAME=$(echo $tag_name | tr -dc '[:alnum:]\n\r' | tr '[:upper:]' '[:lower:]')
-LIST_TAGS_FILENAME=${FORMATTED_TAG_NAME}_tagged_filelist.txt
+LIST_TAGS_FILENAME=tag_${FORMATTED_TAG_NAME}_filelist.txt
 
 for dir in ${tag_dirs//,/ }
 do

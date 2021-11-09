@@ -51,13 +51,19 @@ fi
 printf ">>>>>>>>>>  CURRENT TAGGED FILES REPORT  <<<<<<<<<<\n" >> quality_report.txt
 printf "Tag name (from config): $tag_name \n" >> quality_report.txt
 printf "Tag directory(s) (from config): $tag_dirs \n" >> quality_report.txt
-printf "Tag count threshold (from config): $tag_count_threshold \n" >> quality_report.txt
+
+if [ $tag_count_threshold == "-1" ]
+then
+    printf "Tag count threshold disabled \n" >> quality_report.txt
+else
+    printf "Tag count threshold (from config): $tag_count_threshold \n" >> quality_report.txt
+fi
 printf "Current tag count: $TOTAL_TAGGED_FILES_COUNT \n" >> quality_report.txt
 printf "You can see list of tagged files into list_tagged_files.txt \n\n" >> quality_report.txt
 
 cp quality_report.txt $BITRISE_DEPLOY_DIR/quality_report.txt || true
 
-if [ $TOTAL_TAGGED_FILES_COUNT -gt $tag_count_threshold ]; then
+if [ !$tag_count_threshold == "-1" ] && [ $TOTAL_TAGGED_FILES_COUNT -gt $tag_count_threshold ]; then
     envman add --key TOTAL_TAGGED_FILES_COUNT --value $TOTAL_TAGGED_FILES_COUNT
     echo "ERROR: New files have been tagged"
     exit 1

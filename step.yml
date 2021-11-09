@@ -65,7 +65,9 @@ inputs:
 
         You can add a config file where you can add all application information and set `config_file_path` to find it.
 
-        Tip: You can set it to 0 and launch one time this step to check report file to know the current value.
+        Tip 1: You can set it to 0 and launch one time this step to check report file to know the current value.
+
+        Tip 2: You can set it to -1 and it will disable threshold count check.
       is_expand: true
       is_required: false
 
